@@ -1,3 +1,10 @@
+/*
+* Define la estructura de datos del usuario:
+* - Propiedades del usuario (nombre, email, etc.)
+* - Métodos para convertir a/desde JSON
+* - Getter para nombre completo
+*/
+
 class User {
   final int id;
   final String firstName;
@@ -8,6 +15,7 @@ class User {
   final String email;
   final DateTime createdAt;
 
+  // Combina todos los nombres del usuario en un solo string
   String get fullName {
     String name = firstName;
     if (middleName != null) name += ' $middleName';
@@ -27,6 +35,7 @@ class User {
     required this.createdAt,
   });
 
+  // Crea una instancia de User desde un mapa JSON
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as int,
