@@ -1,7 +1,15 @@
+/*
+* Funciones de validación:
+* - Validación de email
+* - Validación de contraseña
+* - Validación de campos obligatorios
+*/
+
 class Validators {
   static final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   static final RegExp _ciRegex = RegExp(r'^\d+$');
 
+  // Valida el formato del correo electrónico usando una expresión regular
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Ingrese su correo electrónico';
@@ -22,6 +30,7 @@ class Validators {
     return null;
   }
 
+  // Valida que la contraseña cumpla con los requisitos mínimos de seguridad
   static String? validatePassword(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Ingrese su contraseña';
