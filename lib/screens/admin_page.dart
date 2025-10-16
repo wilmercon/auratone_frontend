@@ -1,3 +1,11 @@
+/*
+* Panel de administración:
+* - Lista de usuarios registrados
+* - Tabla con información detallada de usuarios
+* - Control de acceso solo para administradores
+* - Funcionalidad de cerrar sesión
+*/
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +32,7 @@ class _AdminPageState extends State<AdminPage> {
     _checkAdminAndLoadUsers();
   }
 
+  // Verifica si el usuario es administrador y carga la lista de usuarios
   Future<void> _checkAdminAndLoadUsers() async {
     final prefs = await SharedPreferences.getInstance();
     final rawUser = prefs.getString('session_user');
@@ -48,7 +57,6 @@ class _AdminPageState extends State<AdminPage> {
         _error = null;
       });
 
-      // TODO: Implementar método en AuthService para obtener usuarios
       final result = await AuthService().getUsers();
 
       setState(() {

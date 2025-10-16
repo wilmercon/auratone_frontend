@@ -1,5 +1,11 @@
+/*
+* Pantalla de registro de nuevos usuarios:
+* - Formulario completo para datos personales
+* - Validación de campos
+* - Registro de nuevos usuarios en el sistema
+*/
+
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
 import '../services/auth_service.dart';
 import '../utils/validators.dart';
 import '../widgets/common_widgets.dart';
@@ -30,6 +36,7 @@ class _SignupPageState extends State<SignupPage> {
 
   final _auth = AuthService();
 
+  // Libera los recursos de los controladores de texto
   @override
   void dispose() {
     _firstNameCtrl.dispose();

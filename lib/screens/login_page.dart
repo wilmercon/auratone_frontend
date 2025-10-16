@@ -1,3 +1,10 @@
+/*
+* Pantalla de inicio de sesión:
+* - Formulario para email y contraseña
+* - Validación de credenciales
+* - Redirección a Home o Admin según el tipo de usuario
+*/
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -33,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // Procesa el intento de inicio de sesión
   Future<void> _doLogin() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() {

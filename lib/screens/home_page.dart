@@ -1,3 +1,10 @@
+/*
+* Pantalla principal para usuarios regulares:
+* - Muestra la interfaz principal del usuario
+* - Gestiona la sesión del usuario
+* - Permite cerrar sesión
+*/
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +29,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadSession() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString('session_user');
-    setState(() => _user = raw != null ? jsonDecode(raw) as Map<String, dynamic> : null);
+    setState(() =>
+        _user = raw != null ? jsonDecode(raw) as Map<String, dynamic> : null);
   }
 
   Future<void> _logout() async {
