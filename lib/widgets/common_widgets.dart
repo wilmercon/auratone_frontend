@@ -1,3 +1,10 @@
+/*
+* Widgets comunes reutilizables:
+* - CustomTextField: Campo de texto personalizado
+* - LoadingButton: Botón con estado de carga
+* - ErrorMessage: Mensaje de error formateado
+*/
+
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -20,6 +27,7 @@ class CustomTextField extends StatelessWidget {
     this.onToggleVisibility,
   });
 
+  // Construye un campo de texto personalizado con ícono y validación
   @override
   Widget build(BuildContext context) {
     return TextFormField(
