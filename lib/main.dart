@@ -1,3 +1,12 @@
+/*
+* Punto de entrada principal de la aplicación.
+* Define:
+* - Configuración inicial de la aplicación
+* - Tema visual (colores, estilos)
+* - Sistema de rutas para la navegación entre pantallas
+* - Pantalla inicial (LoginPage)
+*/
+
 import 'package:flutter/material.dart';
 import 'screens/admin_page.dart';
 import 'screens/login_page.dart';
