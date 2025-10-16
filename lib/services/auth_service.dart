@@ -1,3 +1,9 @@
+/*
+* Servicio principal de autenticación:
+* - Define la interfaz común para autenticación
+* - Gestiona la selección entre implementación web y móvil
+*/
+
 import 'auth_service_interface.dart';
 
 // Platform-specific implementation
@@ -8,6 +14,7 @@ class AuthService implements AuthServiceInterface {
   final platform.AuthService _impl = platform.AuthService();
 
   @override
+  // Autenticación de usuario con email y contraseña
   Future<Map<String, dynamic>> login({
     required String email,
     required String password,

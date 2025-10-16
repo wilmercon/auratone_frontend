@@ -1,3 +1,10 @@
+/*
+* Implementación web del servicio de autenticación:
+* - Almacena datos en SharedPreferences
+* - Maneja registro y login de usuarios
+* - Gestiona credenciales del administrador
+*/
+
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,8 +14,10 @@ import 'auth_service_interface.dart';
 class AuthService implements AuthServiceInterface {
   static const _usersKey = 'auth_users_db';
 
+  // Encripta la contraseña usando SHA-256
   String _hash(String input) => sha256.convert(utf8.encode(input)).toString();
 
+  // Carga la lista de usuarios desde el almacenamiento local
   Future<List<Map<String, dynamic>>> _loadUsers() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_usersKey);

@@ -1,3 +1,10 @@
+/*
+* Implementación móvil del servicio de autenticación:
+* - Usa SQLite para almacenamiento
+* - Maneja registro y login de usuarios
+* - Gestiona credenciales del administrador
+*/
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
@@ -10,12 +17,14 @@ import 'auth_service_interface.dart';
 class AuthService implements AuthServiceInterface {
   static Database? _db;
 
+  // Obtiene la instancia de la base de datos SQLite
   Future<Database> get _database async {
     if (_db != null) return _db!;
     _db = await _initDb();
     return _db!;
   }
 
+  // Inicializa la base de datos y crea la tabla de usuarios
   Future<Database> _initDb() async {
     final Directory dir = await getApplicationDocumentsDirectory();
     final String dbPath = p.join(dir.path, 'users.db');

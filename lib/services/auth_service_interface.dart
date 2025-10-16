@@ -1,3 +1,10 @@
+/*
+* Define la interfaz base de autenticación:
+* - Métodos requeridos para autenticación
+* - Credenciales del administrador
+* - Estructura común para ambas implementaciones
+*/
+
 abstract class AuthServiceInterface {
   Future<Map<String, dynamic>> register({
     required String firstName,
