@@ -75,43 +75,17 @@ Luego instale los paquetes:
 flutter pub add http shared_preferences
 ```
 
-## Ejecutar en web
+## Ejecutar en web (Desarrollo)
 
 ```bash
 flutter run -d chrome
 ```
-
-## Configuración
-
-### Variables de Entorno
-
-El sistema usa por defecto:
-- **Puerto Frontend**: Asignado automáticamente por Flutter
-
-### Credenciales de Administrador
-
-```
-Email: admin@gmail.com
-Contraseña: admin123
-```
-
-## Dependencias Principales
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  http: ^1.1.0              # Peticiones HTTP
-  shared_preferences: ^2.2.2 # Almacenamiento local
-```
-
 ## Diseño y Estilo
 
 - **Colores principales**: Azul (#1976D2)
 - **Tipografía**: Roboto (Material Design)
 - **Imágenes de fondo**: 
   - `music_login.jpg` - Login y registro
-  - `music_fondo.jpg` - Alternativo
 - **Componentes**: Cards, Buttons, TextFields personalizados
 
 ## Seguridad
