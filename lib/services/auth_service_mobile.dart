@@ -1,17 +1,12 @@
 /*
 * Implementación móvil del servicio de autenticación:
-* - Usa SQLite para almacenamiento
+* - Se conecta al backend Flask para autenticación
 * - Maneja registro y login de usuarios
-* - Gestiona credenciales del administrador
+* - Gestiona tokens JWT
 */
 
 import 'dart:convert';
-import 'dart:io';
-import 'package:crypto/crypto.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
-
+import 'package:http/http.dart' as http;
 import 'auth_service_interface.dart';
 
 class AuthService implements AuthServiceInterface {
@@ -24,33 +19,7 @@ class AuthService implements AuthServiceInterface {
     return _db!;
   }
 
-  // Inicializa la base de datos y crea la tabla de usuarios
-  Future<Database> _initDb() async {
-    final Directory dir = await getApplicationDocumentsDirectory();
-    final String dbPath = p.join(dir.path, 'users.db');
-    return openDatabase(
-      dbPath,
-      version: 1,
-      onCreate: (database, version) async {
-        await database.execute('''
-          CREATE TABLE users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            first_name TEXT NOT NULL,
-            middle_name TEXT,
-            last_name TEXT NOT NULL,
-            second_last_name TEXT,
-            ci TEXT UNIQUE NOT NULL,
-            email TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            role TEXT NOT NULL DEFAULT 'user',
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
-          )
-        ''');
-      },
-    );
-  }
-
-  String _hash(String input) => sha256.convert(utf8.encode(input)).toString();
+  static const String _baseUrl = 'http://localhost:5000/api';
 
   Future<Map<String, dynamic>> register({
     required String firstName,
@@ -62,32 +31,40 @@ class AuthService implements AuthServiceInterface {
     required String password,
     String? role,
   }) async {
-    final db = await _database;
     try {
-      final id = await db.insert('users', {
-        'first_name': firstName,
-        'middle_name': middleName,
-        'last_name': lastName,
-        'second_last_name': secondLastName,
-        'ci': ci,
-        'email': email,
-        'password_hash': _hash(password),
-        'role': role ?? 'user',
-      });
-      return {
-        'success': true,
-        'user': {
-          'id': id,
-          'first_name': firstName,
-          'middle_name': middleName,
-          'last_name': lastName,
-          'second_last_name': secondLastName,
+      final response = await http.post(
+        Uri.parse('$_baseUrl/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'firstName': firstName,
+          'middleName': middleName,
+          'lastName': lastName,
+          'secondLastName': secondLastName,
           'ci': ci,
           'email': email,
-        },
-      };
+          'password': password,
+          'role': role,
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+      if (response.statusCode == 201) {
+        return {
+          'success': true,
+          'user': data['user'],
+          'token': data['token'],
+        };
+      } else {
+        return {
+          'success': false,
+          'error': data['error'] ?? 'Error al registrar usuario',
+        };
+      }
     } catch (e) {
-      return {'success': false, 'error': 'Usuario o email ya existe'};
+      return {
+        'success': false,
+        'error': 'Error de conexión: ${e.toString()}',
+      };
     }
   }
 

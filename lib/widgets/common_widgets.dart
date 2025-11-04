@@ -32,18 +32,30 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
         labelText: label,
+        labelStyle: const TextStyle(fontSize: 13),
         border: const OutlineInputBorder(),
-        prefixIcon: Icon(icon),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Icon(icon, size: 18),
+        ),
         suffixIcon: onToggleVisibility != null
             ? IconButton(
                 icon: Icon(
                   obscureText ? Icons.visibility : Icons.visibility_off,
+                  size: 18,
                 ),
                 onPressed: onToggleVisibility,
+                padding: const EdgeInsets.all(8),
+                visualDensity: VisualDensity.compact,
               )
             : null,
+        isDense: true,
+        floatingLabelStyle: const TextStyle(fontSize: 13),
       ),
       keyboardType: keyboardType,
       obscureText: obscureText,
@@ -69,15 +81,16 @@ class LoadingButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: loading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size(double.infinity, 48),
+        minimumSize: const Size(double.infinity, 36),
+        padding: const EdgeInsets.symmetric(vertical: 8),
       ),
       child: loading
           ? const SizedBox(
-              height: 20,
-              width: 20,
+              height: 18,
+              width: 18,
               child: CircularProgressIndicator(strokeWidth: 2),
             )
-          : Text(text),
+          : Text(text, style: const TextStyle(fontSize: 14)),
     );
   }
 }
@@ -100,12 +113,12 @@ class ErrorMessage extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: Colors.red[700]),
+          Icon(Icons.error_outline, color: Colors.red[700], size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               message!,
-              style: TextStyle(color: Colors.red[700]),
+              style: TextStyle(color: Colors.red[700], fontSize: 13),
             ),
           ),
         ],

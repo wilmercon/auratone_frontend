@@ -6,7 +6,7 @@
 
 import 'auth_service_interface.dart';
 
-// Platform-specific implementation
+// Implementación específica de la plataforma
 import 'auth_service_mobile.dart' if (dart.library.html) 'auth_service_web.dart'
     as platform;
 
